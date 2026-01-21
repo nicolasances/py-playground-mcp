@@ -1,15 +1,31 @@
-from fastmcp import FastMCP
+from fastmcp import FastMCP, Context
 
 mcp = FastMCP("Toto Integration Example")
 
-@mcp.tool() 
-def greet(name: str, __context__=None) -> str:
-    """Greet a person by name."""
-    if __context__ is not None:
-        auth_header = __context__.headers.get("authorization")
+def get_bearer_token(ctx: Context):
+    request = ctx.request_context.request
+    headers = request.headers
+    # Check if 'Authorization' header is present
+    authorization_header = headers.get('Authorization')
+    
+    if authorization_header:
+        # Split the header into 'Bearer <token>'
+        parts = authorization_header.split()
         
-        print(f"Authorization header: {auth_header}")
+        if len(parts) == 2 and parts[0] == 'Bearer':
+            return parts[1]
+        else:
+            raise ValueError("Invalid Authorization header format")
+    else:
+        raise ValueError("Authorization header missing")
 
+@mcp.tool() 
+async def greet(name: str, context: Context) -> str:
+    """Greet a person by name."""
+    token = get_bearer_token(context)
+    
+    await context.info(f"{token}")
+    
     return f"Hello, {name}!"
 
 if __name__ == "__main__":
