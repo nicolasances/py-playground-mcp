@@ -17,6 +17,8 @@ The server will start up and the UI will be accessible at `http://localhost:6274
 MCP Server support Bearer Token authentication. <br>
 You can set the token in the UI in the Authentication left panel. <br>
 
+![Authentication in MCP Inspector](docs/img/mcpi-auth.png)
+
 ## Different ways to run MCP Servers
 ### 1. Easiest Way: Generate it from OpenAPI Specifications
 
