@@ -65,7 +65,7 @@ client = httpx.AsyncClient(base_url="https://api.dev.toto.nimoto.eu/tometopics",
 openapi_spec = httpx.get("https://api.dev.toto.nimoto.eu/tometopics/jsondocs", verify=False).json() 
 
 mcp = FastMCP.from_openapi(
-    name="Toto Integration Example",
+    name="Integration Example",
     openapi_spec=openapi_spec,
     client=client,
     #auth_header_getter=get_bearer_token,
