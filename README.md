@@ -4,6 +4,13 @@
 Mainly focuses on the following integrations: 
 * [Toto Ecosystem](https://github.com/nicolasances/toto)
 
+## Index
+- [Testing](#testing)
+- [Authentication](#authentication)
+- [Different ways to run MCP Servers](#different-ways-to-run-mcp-servers)
+  - [1. Easiest Way: Generate it from OpenAPI Specifications](#1-easiest-way-generate-it-from-openapi-specifications)
+  - [2. More control: Use Tools](#2-more-control-use-tools)
+
 ## Testing
 To test the MCP Server, you can use [`mcp-inspector`](https://github.com/modelcontextprotocol/inspector). Run the following: 
 ```
