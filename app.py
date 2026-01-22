@@ -34,8 +34,6 @@ async def greet(name: str, context: Context) -> str:
     """Greet a person by name."""
     token = get_bearer_token(context)
     
-    await context.info(f"{token}")
-    
     return f"Hello, {name}!"
 
 @mcp.tool()
