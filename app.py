@@ -61,8 +61,10 @@ def get_bearer_token(ctx: Context):
 #         return [Topic(topic) for topic in topics_data.get('topics', [])]
 
 
-client = httpx.AsyncClient(base_url="https://api.dev.toto.nimoto.eu/tometopics", verify=False)
-openapi_spec = httpx.get("https://api.dev.toto.nimoto.eu/tometopics/jsondocs", verify=False).json() 
+# client = httpx.AsyncClient(base_url="https://api.dev.toto.nimoto.eu/tometopics", verify=False)
+# openapi_spec = httpx.get("https://api.dev.toto.nimoto.eu/tometopics/jsondocs", verify=False).json() 
+client = httpx.AsyncClient(base_url="https://dnd-services-test.de-prod.dk/orstedlabs/event/v1/data/api/prod", verify=False)
+openapi_spec = httpx.get("https://dnd-services-test.de-prod.dk/orstedlabs/event/v1/data/api/prod/static/swagger/openapi.json", verify=False).json() 
 
 mcp = FastMCP.from_openapi(
     name="Integration Example",

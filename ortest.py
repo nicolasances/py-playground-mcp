@@ -2,7 +2,6 @@
 import os
 from openai import AzureOpenAI
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider 
-
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -12,20 +11,34 @@ token_provider = get_bearer_token_provider(
     DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
 )
 endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")  
+url = 'http://localhost:8080/mcp'
    
 client = AzureOpenAI(
   azure_endpoint = endpoint,
   azure_ad_token_provider=token_provider,
-  api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview")
+  api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),  
 )
 
-response = client.chat.completions.create(
-    model=os.getenv("DEPLOYMENT_NAME", "gpt5"),
-    messages=[
-        # The new 'o1mini' model does not support the system role. Please remove the following line if you are using the new 'o1mini' model.
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello"}
-    ]
+response = client.responses.create(
+    model="gpt5", 
+    tools=[{
+        "type": "mcp", 
+        "server_label": "Integration Example",
+        "server_url": url,
+        "require_approval": "never",
+        "authorization": f"{token}",
+    }], 
+    input="Hello"
 )
 
-print(response.choices[0].message.content)
+
+# response = client.chat.completions.create(
+#     model=os.getenv("DEPLOYMENT_NAME", "gpt5"),
+#     messages=[
+#         # The new 'o1mini' model does not support the system role. Please remove the following line if you are using the new 'o1mini' model.
+#         {"role": "system", "content": "You are a helpful assistant."},
+#         {"role": "user", "content": "Hello"}
+#     ]
+# )
+
+# print(response.choices[0].message.content)
