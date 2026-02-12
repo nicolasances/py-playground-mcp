@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from fastmcp import FastMCP, Context
 import httpx
+import yaml
+import os
+import json
 
 mcp = FastMCP("Toto Integration Example")
 
@@ -60,11 +63,9 @@ def get_bearer_token(ctx: Context):
         
 #         return [Topic(topic) for topic in topics_data.get('topics', [])]
 
-
+# Load OpenAPI spec from jsondocs endpoint (now using OpenAPI 3.1.0 format)
 client = httpx.AsyncClient(base_url="https://api.dev.toto.nimoto.eu/tometopics", verify=False)
-openapi_spec = httpx.get("https://api.dev.toto.nimoto.eu/tometopics/jsondocs", verify=False).json() 
-# client = httpx.AsyncClient(base_url="https://dnd-services-test.de-prod.dk/orstedlabs/event/v1/data/api/prod", verify=False)
-# openapi_spec = httpx.get("https://dnd-services-test.de-prod.dk/orstedlabs/event/v1/data/api/prod/static/swagger/openapi.json", verify=False).json() 
+openapi_spec = httpx.get("https://api.dev.toto.nimoto.eu/tometopics/jsondocs", verify=False).json()
 
 mcp = FastMCP.from_openapi(
     name="Integration Example",
@@ -74,4 +75,4 @@ mcp = FastMCP.from_openapi(
 )
 
 if __name__ == "__main__":
-    mcp.run(transport="http", host="127.0.0.1", port=8080, path="/mcp")
+    mcp.run(transport="http", host="127.0.0.1", port=8081, path="/mcp")
